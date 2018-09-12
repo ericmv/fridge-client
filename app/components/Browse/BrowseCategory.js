@@ -11,27 +11,42 @@ import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-nativ
 
 export default class BrowseCategory extends Component {
 
+  handlePress = (category) => {
+    this.props.navigation.navigate("Results", {category: category})
+  }
+  
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity ref='meat' style={styles.meats}>
+        <TouchableOpacity ref='meat' style={styles.meats} onPress={this.handlePress.bind(this, 'meat')}>
           <View>
             <Text>Meat/Poultry</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity ref='vegetable' style={styles.vegetables} >
+        <TouchableOpacity ref='etc' style={styles.etc} onPress={this.handlePress.bind(this, 'seafood')}>
+          <View>
+            <Text>Seafood</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity ref='vegetable' style={styles.vegetables} onPress={this.handlePress.bind(this, 'vegetable')}>
           <View>
             <Text>Vegetables</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity ref='fruit' style={styles.fruits} >
+        <TouchableOpacity ref='fruit' style={styles.fruits} onPress={this.handlePress.bind(this, 'fruit')}>
           <View>
             <Text>Fruits</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity ref='etc' style={styles.etc} >
+        <TouchableOpacity ref='etc' style={styles.etc} onPress={this.handlePress.bind(this, 'dairy')}>
           <View>
-            <Text>Herbs/Seasoning/Etc.</Text>
+            <Text>Dairy</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity ref='etc' style={styles.etc} onPress={this.handlePress.bind(this, 'misc')}>
+          <View>
+            <Text>Misc</Text>
           </View>
         </TouchableOpacity>
       </View>

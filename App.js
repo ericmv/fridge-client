@@ -11,6 +11,7 @@ import {AppRegistry, StyleSheet, Text, View} from 'react-native';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
 import BrowseHome from './app/components/Browse/BrowseHome';
 import BrowseCategory from './app/components/Browse/BrowseCategory';
+import Results from './app/components/Results/Results';
 import Login from './app/components/Validate/Login';
 
 
@@ -21,7 +22,8 @@ const RootStack = createStackNavigator(
     Home:{screen: HomeScreen},
     Browse:{screen: BrowseHome},
     BrowseCategory: {screen: BrowseCategory},
-    Login: {screen: Login}
+    Login: {screen: Login},
+    Results: {screen: Results}
   },
   {
     initialRouteName: 'Login',
