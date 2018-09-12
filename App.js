@@ -26,7 +26,7 @@ const RootStack = createStackNavigator(
     Results: {screen: Results}
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'BrowseCategory',
   }
 );
 

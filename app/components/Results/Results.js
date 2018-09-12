@@ -9,6 +9,8 @@
 import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage} from 'react-native';
 import axios from 'axios'
+import Result from './Result'
+
 export default class Results extends Component {
   constructor () {
     super();
@@ -57,7 +59,7 @@ export default class Results extends Component {
       <View style={styles.container}>
         <FlatList
           data={this.state.results}
-          renderItem = {({item}) => <Text>{item.name}</Text>}
+          renderItem = {({item}) => <Result item={item}/>}
         />
       </View>
     );
@@ -70,23 +72,6 @@ const styles = StyleSheet.create(
     container: {
       flex: 1,
       flexDirection: 'column',
-    },
-    owner: {
-      flex: 1,
-      backgroundColor: 'blue',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    category: {
-      flex: 1,
-      backgroundColor: 'red',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    all: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
     }
 
   }
