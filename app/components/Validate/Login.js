@@ -21,9 +21,10 @@ export default class Login extends Component {
   validateSession = async () => {
     try {
       let session_id = await AsyncStorage.getItem('session_id');
+      console.log(session_id)
       axios({
         method: 'POST',
-        url: "http://192.168.1.3:3000/users/validateUser",
+        url: "http://192.168.1.3:3000/users/validateSession",
         data: {
           session: session_id
         },
@@ -48,6 +49,20 @@ export default class Login extends Component {
     }
   }
 
+  storeSession = async (data) => {
+    const session_id = data._id
+    const user_id = data.user_id
+    const fridge_id = data.fridge_id
+    try {
+      await AsyncStorage.setItem('session_id', session_id);
+      await AsyncStorage.setItem('user_id', user_id);
+      await AsyncStorage.setItem('fridge_id', fridge_id);
+    } catch (error) {
+      console.log("Error storing session")
+      this.props.navigation.navigate('Login')
+    }
+
+  }
   validateUser = () => {
     const username = this.state.username;
     const password = this.state.password;
@@ -65,7 +80,7 @@ export default class Login extends Component {
     })
     .then((res) => {
       if (res.data != null) {
-        console.log("sdkfjhsdkhfkjsd")
+        this.storeSession(res.data);
         this.props.navigation.navigate("Home")
       }
       else {
