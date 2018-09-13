@@ -13,6 +13,7 @@ import BrowseHome from './app/components/Browse/BrowseHome';
 import BrowseCategory from './app/components/Browse/BrowseCategory';
 import Results from './app/components/Results/Results';
 import Login from './app/components/Validate/Login';
+import AddItem from './app/components/Add/AddItem'
 
 
 import {createStackNavigator} from 'react-navigation';
@@ -23,10 +24,11 @@ const RootStack = createStackNavigator(
     Browse:{screen: BrowseHome},
     BrowseCategory: {screen: BrowseCategory},
     Login: {screen: Login},
-    Results: {screen: Results}
+    Results: {screen: Results},
+    Add: {screen: AddItem}
   },
   {
-    initialRouteName: 'BrowseCategory',
+    initialRouteName: 'Add',
   }
 );
 
