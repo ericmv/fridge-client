@@ -2,12 +2,21 @@
 import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
-export default class Result extends Component {
+export default class Tag extends Component {
 
   render() {
+    const tagStyle = {
+      borderRadius: 10,
+      height:20,
+      backgroundColor: this.props.color,
+      paddingHorizontal: 5,
+      display: 'flex',
+      justifyContent: 'center',
+      marginLeft: 5,
+    }
     return (
-      <View style={styles.container}>
-        <Text>{this.props.text}</Text>
+      <View style={tagStyle}>
+        <Text style={styles.text}>{this.props.text}</Text>
       </View>
     );
   }
@@ -17,13 +26,19 @@ export default class Result extends Component {
 const styles = StyleSheet.create(
   {
     container: {
-      flex: 1,
       borderRadius: 10,
-      height:30,
+      height:20,
       backgroundColor: "red",
-      
+      paddingHorizontal: 5,
+      display: 'flex',
+      justifyContent: 'center',
+      marginLeft: 5
+    },
+    text: {
+      fontSize: 12,
+      color: "white"
     }
   }
 )
 
-AppRegistry.registerComponent('Result', () => Result);
+AppRegistry.registerComponent('Tag', () => Tag);

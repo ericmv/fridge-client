@@ -14,40 +14,6 @@ export default class Login extends Component {
       password: ""
     }
   }
-  componentWillMount() {
-    this.validateSession();
-  }
-
-  validateSession = async () => {
-    try {
-      let session_id = await AsyncStorage.getItem('session_id');
-      console.log(session_id)
-      axios({
-        method: 'POST',
-        url: "http://192.168.1.3:3000/users/validateSession",
-        data: {
-          session: session_id
-        },
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((res) => {
-        if (res.data != null) {
-          this.props.navigation.navigate("Home")
-        }
-        else {
-          console.log("Session Invalid")
-        }
-
-      })
-      .catch((err) => {
-        console.log("Could not validate session at this time")
-      })
-    } catch (err) {
-      console.log("Error retrieving from store")
-    }
-  }
 
   storeSession = async (data) => {
     const session_id = data._id
@@ -81,7 +47,7 @@ export default class Login extends Component {
     .then((res) => {
       if (res.data != null) {
         this.storeSession(res.data);
-        this.props.navigation.navigate("Home")
+        this.props.navigation.navigate("Home");
       }
       else {
         console.log("Invalid login credentials")

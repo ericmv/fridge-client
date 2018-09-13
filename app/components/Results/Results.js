@@ -22,7 +22,6 @@ export default class Results extends Component {
   componentWillMount () {
     const category = this.props.navigation.getParam('category')
     AsyncStorage.getItem("user_id")
-
     .then((id) => {
       axios({
         method: 'POST',

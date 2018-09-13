@@ -1,15 +1,34 @@
 
 import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import TagList from './TagList'
+import Tag from './Tag'
 
 export default class Result extends Component {
 
+
+
+
   render() {
+    let tagListData = [];
+    for (let key in this.props.item) {
+      if (key === "category" || key === "owner_name") {
+        if (key !== "") {
+          tagListData.push({type:key, name:this.props.item[key]});
+        }
+      }
+    }
     return (
       <View style={styles.container}>
         <View style={styles.topRow}>
           <Text style={styles.name}>{this.props.item.name}</Text>
-          <Text style={styles.qty}>{this.props.item.quantity}</Text>
+          <View style={{marginTop: 5, marginRight: 5}} ><Tag color="#0be881" text="4 days"/></View>
+        </View>
+        <View style={styles.bottomRow}>
+          <View>
+            <TagList data={tagListData} />
+          </View>
+          <View><Text style={styles.qty}>Qty: {this.props.item.quantity} {this.props.item.unit} </Text></View>
         </View>
       </View>
     );
@@ -22,29 +41,31 @@ const styles = StyleSheet.create(
     container: {
       flex: 1,
       height: 100,
-      backgroundColor: "#0984e3"
+      backgroundColor: "#636e72",
+      justifyContent: 'space-between',
+      borderBottomWidth: .5
     },
     topRow: {
       flexDirection: 'row',
-      flex: 1,
+      paddingTop: 5,
       justifyContent: 'space-between'
     },
     bottomRow: {
       flexDirection: 'row',
-      flex: 1,
+      paddingBottom: 10,
+      display: 'flex',
+      alignItems: 'center',
       justifyContent: 'space-between'
     },
     name: {
       color: 'white',
       fontSize: 24,
-      paddingTop: 5,
       paddingLeft:10
     },
     qty: {
       color: 'white',
       fontSize: 16,
-      paddingTop: 5,
-      paddingLeft:10
+      paddingRight:5
     }
   }
 )
