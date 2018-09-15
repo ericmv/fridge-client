@@ -5,6 +5,11 @@ import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-nativ
 export default class Tag extends Component {
 
   render() {
+    let marginRight = 5;
+    if (this.props.marginRight) {
+      marginRight = this.props.marginRight;
+    }
+    console.log(this.props.text, this.props.marginRight)
     const tagStyle = {
       borderRadius: 10,
       height:20,
@@ -12,7 +17,7 @@ export default class Tag extends Component {
       paddingHorizontal: 5,
       display: 'flex',
       justifyContent: 'center',
-      marginLeft: 5,
+      marginRight: marginRight,
     }
     return (
       <View style={tagStyle}>
@@ -32,7 +37,7 @@ const styles = StyleSheet.create(
       paddingHorizontal: 5,
       display: 'flex',
       justifyContent: 'center',
-      marginLeft: 5
+      marginRight: 5
     },
     text: {
       fontSize: 12,

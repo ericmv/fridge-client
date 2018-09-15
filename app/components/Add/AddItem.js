@@ -5,6 +5,9 @@ import { Dropdown } from 'react-native-material-dropdown';
 import { TextField } from 'react-native-material-textfield';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
+import axios from 'axios';
+
+var moment = require('moment');
 
 // You can import from local files
 
@@ -38,9 +41,42 @@ export default class AddItem extends React.Component {
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
   _handleDatePicked = (date) => {
-    console.log('A date has been picked: ', date);
+    const formatted = moment(date).format('YYYY-MM-DD');
+    this.setState({exp: formatted})
+    console.log('A date has been picked: ', formatted);
     this._hideDateTimePicker();
   };
+
+  handleSubmit = () => {
+    const body = {
+      name: this.state.name,
+      category: this.state.category,
+      qty: this.state.quantity,
+      exp: this.state.exp,
+      unit: this.state.unit,
+      user: "5b98a5a41c9d44000064ed27"
+    }
+
+    axios({
+      method: 'POST',
+       url: "http://192.168.1.4:3000/insert/item",
+      data: body,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((res) => {
+      if (res != null) {
+        console.log("SUCCESS");
+      }
+      else {
+        console.log("FAILURE");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -57,6 +93,7 @@ export default class AddItem extends React.Component {
           data={this.state.categories}
           containerStyle={styles.categoryDropdown}
           itemCount={6}
+          onChangeText = {(input) => this.setState({category: input})}
         />
           <View style={styles.expiration}>
             <TextInput
@@ -95,7 +132,7 @@ export default class AddItem extends React.Component {
           </Switch>
         </View>
         <View style={styles.row}>
-          <TouchableHighlight style={styles.button}><Text style={styles.buttonText}>Add Item</Text></TouchableHighlight>
+          <TouchableHighlight style={styles.button} onPress={this.handleSubmit}><Text style={styles.buttonText}>Add Item</Text></TouchableHighlight>
         </View>
 
       </View>

@@ -32,10 +32,11 @@ export default class Login extends Component {
   validateUser = () => {
     const username = this.state.username;
     const password = this.state.password;
-
+    console.log(username);
+    console.log(password)
     axios({
       method: 'POST',
-      url: "http://192.168.1.3:3000/users/login",
+      url: "http://192.168.1.4:3000/users/login",
       data: {
         user: username,
         password: password
