@@ -10,13 +10,25 @@ import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage} from 'react-native';
 import axios from 'axios'
 import Result from './Result'
+import ResultModal from '../Modal/ResultModal'
 
 export default class Results extends Component {
   constructor () {
     super();
     this.state = {
-      results: []
+      results: [],
+      modal: {name:"test"},
+      display: false
     }
+  }
+
+  displayModal = (item) => {
+
+    this.setState({modal:item, display: true})
+    console.log(this.state.display, this.state.modal.name)
+  }
+  closeModal = () => {
+    this.setState({display: false})
   }
 
   componentWillMount () {
@@ -58,8 +70,9 @@ export default class Results extends Component {
       <View style={styles.container}>
         <FlatList
           data={this.state.results}
-          renderItem = {({item}) => <Result item={item}/>}
+          renderItem = {({item}) => <Result item={item} onPress={this.displayModal.bind(this)}/>}
         />
+        <ResultModal display={this.state.display} modal={this.state.modal} onClose={this.closeModal.bind(this)}/>
       </View>
     );
   }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Text, View, Image} from 'react-native';
+import {AppRegistry, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import HomeScreen from '../HomeScreen/HomeScreen';
 import BrowseHome from '../Browse/BrowseHome';
 import BrowseCategory from '../Browse/BrowseCategory';
@@ -7,6 +7,7 @@ import Results from '../Results/Results';
 import Login from '../Validate/Login';
 import AddItem from '../Add/AddItem';
 import Profile from '../Profile/Profile';
+import ResultModal from '../Modal/ResultModal';
 
 import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -25,7 +26,21 @@ const RootStack = createStackNavigator(
   }
 );
 
-const TabNavigator = createBottomTabNavigator (
+export default class TabNavigator extends Component {
+	constructor() {
+		super();
+		this.state = {
+			display: false
+		}
+	}
+	onClose=()=> {
+		this.setState({display: false})
+	}
+	onOpen=()=>{
+		console.log("LDKSF")
+		this.setState({display: true})
+	}
+	TabNavigator = createBottomTabNavigator (
     {
       Main: {
           screen: RootStack,
@@ -38,11 +53,11 @@ const TabNavigator = createBottomTabNavigator (
                 />
             ),
             tabBarOptions: {
-    showLabel: false
-}
-        })
-            },
-           Add: {
+				showLabel: false
+			}
+       	 })
+    	},
+       Add: {
           screen: AddItem,
           navigationOptions: () => ({
             tabBarIcon: ({tintColor}) => (
@@ -53,11 +68,26 @@ const TabNavigator = createBottomTabNavigator (
                 />
             ),
             tabBarOptions: {
-    showLabel: false
-}
+				showLabel: false
+			}
         })
-            },
+    	},
         
+      test: {
+        screen: props => <ResultModal display={this.state.display} modal={{name:"TEST"}} onClose={this.onClose}/>,
+        navigationOptions: () => ({
+            tabBarIcon: ({tintColor}) => (
+                <TouchableOpacity onPress={this.onOpen}><Icon
+                    name="ios-man"
+                    color={tintColor}
+                    size={30}
+                /></TouchableOpacity>
+            ),
+            tabBarOptions: {
+			    showLabel: false
+			},
+        })
+      },
       Profile: {
         screen: Profile,
         navigationOptions: () => ({
@@ -69,12 +99,20 @@ const TabNavigator = createBottomTabNavigator (
                 />
             ),
             tabBarOptions: {
-    showLabel: false
-}
+			    showLabel: false
+			},
         })
       }
+      
     }
 
-  )
 
-export default TabNavigator;
+  )
+	render() {
+		return (
+		  <this.TabNavigator />
+		);
+	}
+}
+
+

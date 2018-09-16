@@ -26,7 +26,7 @@ export default class AddItem extends React.Component {
       language: "Broccoli",
       categories: [
         {value:"Vegetable"},
-        {value:"Meat/Poultry"},
+        {value:"Meat"},
         {value:"Seafood"},
         {value:"Dairy"},
         {value:"Fruit"},
@@ -50,7 +50,7 @@ export default class AddItem extends React.Component {
   handleSubmit = () => {
     const body = {
       name: this.state.name,
-      category: this.state.category,
+      category: this.state.category.toLowerCase(),
       qty: this.state.quantity,
       exp: this.state.exp,
       unit: this.state.unit,
@@ -84,8 +84,8 @@ export default class AddItem extends React.Component {
         <TextField
           label='Name'
           onChangeText = {(input) => this.setState({name: input})}
-          containerStyle={styles.categoryDropdown}
-
+          containerStyle={styles.name}
+          lineWidth={0}
         />
 
         <Dropdown
@@ -115,13 +115,13 @@ export default class AddItem extends React.Component {
         <TextField
           label='Quantity'
           onChangeText={ (input) => this.setState({ quantity:input }) }
-          containerStyle={styles.categoryDropdown}
+          containerStyle={styles.name}
         />
 
         <TextField
           label='Unit'
           onChangeText={ (input) => this.setState({ unit:input }) }
-          containerStyle={styles.categoryDropdown}
+          containerStyle={styles.name}
         />
 
 
@@ -145,7 +145,8 @@ const styles = StyleSheet.create({
     flex: 1,
 
     paddingTop: 5,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: "rgba(0, 184, 148,1.0)"
+    // backgroundColor: '#ecf0f1',
   },
   input: {
     height: 50,
@@ -209,6 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 17
   },
   categoryDropdown: {
+
     flex:1,
     justifyContent: 'center',
     paddingHorizontal: 10,
@@ -218,5 +220,16 @@ const styles = StyleSheet.create({
   calendar: {
     height: 25,
     width: 25
+  },
+  name: {
+    marginHorizontal: 5,
+    height: 25,
+    backgroundColor: 'rgba(255, 255, 255,.2)',
+    borderRadius: 30,
+    flex:1,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    marginTop: 0,
+    paddingTop:0
   }
 });

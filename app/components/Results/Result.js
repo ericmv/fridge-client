@@ -6,8 +6,9 @@ import Tag from './Tag'
 
 export default class Result extends Component {
 
-
-
+  onPress = () => {
+    this.props.onPress(this.props.item);
+  }
 
   render() {
     let tagListData = [];
@@ -29,7 +30,7 @@ export default class Result extends Component {
         </View>
         <View style={styles.options}>
           <View style={styles.name}><Tag text="7 days" color="#f6e58d" marginRight={0}/></View>
-          <View style={styles.name}><Text style={styles.more}>...</Text></View>
+          <TouchableOpacity style={styles.name} onPress={this.onPress}><Text style={styles.more}>...</Text></TouchableOpacity>
         </View>
       </View>
     );
@@ -44,7 +45,9 @@ const styles = StyleSheet.create(
     borderBottomWidth: .5,
     height: 80,
     backgroundColor: "#fcfcfc",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: 5,
+    marginHorizontal: 10
   },
   left: {
     flex: 1,
