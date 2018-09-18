@@ -1,13 +1,60 @@
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {AppRegistry, StyleSheet, Text, View, TouchableOpacity, AsyncStorage} from 'react-native';
 import TagList from './TagList'
 import Tag from './Tag'
+import InitialLabel from '../Labels/InitialLabel'
 
 export default class Result extends Component {
 
   onPress = () => {
-    this.props.onPress(this.props.item);
+    AsyncStorage.getItem("user_id")
+    .then((id) => {
+      console.log(id, this.props.item.owner_id)
+      if (id == this.props.item.owner_id) {
+        this.props.onPress(this.props.item, true);
+      }
+      else {
+       this.props.onPress(this.props.item, false); 
+      }
+    })
+    .catch((err) => {
+      console.log("could not retrieve id")
+    })
+
+  }
+  handleSubmit = () => {
+    if (this.state.name == "") {
+      return;
+    }
+    const body = {
+      name: this.state.name,
+      category: this.state.category.toLowerCase(),
+      qty: this.state.quantity,
+      exp: this.state.exp,
+      unit: this.state.unit,
+      user: "5b98a5a41c9d44000064ed27"
+    }
+
+    axios({
+      method: 'POST',
+       url: "http://192.168.1.4:3000/insert/item",
+      data: body,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((res) => {
+      if (res != null) {
+        console.log("SUCCESS");
+      }
+      else {
+        console.log("FAILURE");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   render() {
@@ -22,7 +69,7 @@ export default class Result extends Component {
     return (
       <View style={styles.container}>
        <View style={styles.left}>
-            <View style={styles.ownerContainer}><Text style={styles.ownerLabel}>E</Text></View>
+            <InitialLabel text={this.props.item.owner_name.charAt(0)}/>
         </View>
         <View style={styles.info}>
           <View style={styles.name}><Text style={styles.nameText}>{this.props.item.name}</Text></View>

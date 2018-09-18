@@ -34,6 +34,7 @@ export default class TagList extends Component {
               <Tag color={color} text={item.name}/>
             )
           }}
+          keyExtractor={(item, index) => index.toString()}
         />
     );
   }

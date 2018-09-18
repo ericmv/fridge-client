@@ -48,6 +48,9 @@ export default class AddItem extends React.Component {
   };
 
   handleSubmit = () => {
+    if (this.state.name == "") {
+      return;
+    }
     const body = {
       name: this.state.name,
       category: this.state.category.toLowerCase(),
@@ -80,12 +83,16 @@ export default class AddItem extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Cancel</Text>
+        </View>
 
         <TextField
           label='Name'
           onChangeText = {(input) => this.setState({name: input})}
           containerStyle={styles.name}
-          lineWidth={0}
+          value={this.state.name}
+
         />
 
         <Dropdown
@@ -145,7 +152,7 @@ const styles = StyleSheet.create({
     flex: 1,
 
     paddingTop: 5,
-    backgroundColor: "rgba(0, 184, 148,1.0)"
+    backgroundColor: "white"
     // backgroundColor: '#ecf0f1',
   },
   input: {
@@ -169,7 +176,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 0,
     marginHorizontal: 10,
-    borderBottomWidth: .5,
     paddingVertical: 10,
     marginTop: 25,
     marginBottom: 20,
@@ -192,7 +198,7 @@ const styles = StyleSheet.create({
   button: {
     height: 50,
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(85, 239, 196,1.0)',
     justifyContent: 'center',
     alignSelf: 'center'
   },
@@ -201,13 +207,19 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   header: {
+    paddingTop: 25,
+    paddingBottom: 10,
+    paddingHorizontal:10,
     flexDirection: 'row',
     paddingLeft: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    justifyContent:'flex-end',
+    borderBottomWidth: .5,
+    borderColor: 'grey'
   },
   headerText: {
-    flex: 1,
-    fontSize: 17
+    color: 'red',
+    fontSize: 18
   },
   categoryDropdown: {
 
@@ -222,10 +234,7 @@ const styles = StyleSheet.create({
     width: 25
   },
   name: {
-    marginHorizontal: 5,
     height: 25,
-    backgroundColor: 'rgba(255, 255, 255,.2)',
-    borderRadius: 30,
     flex:1,
     justifyContent: 'center',
     paddingHorizontal: 10,

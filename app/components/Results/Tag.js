@@ -9,7 +9,6 @@ export default class Tag extends Component {
     if (this.props.marginRight) {
       marginRight = this.props.marginRight;
     }
-    console.log(this.props.text, this.props.marginRight)
     const tagStyle = {
       borderRadius: 10,
       height:20,

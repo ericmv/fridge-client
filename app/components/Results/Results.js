@@ -17,18 +17,100 @@ export default class Results extends Component {
     super();
     this.state = {
       results: [],
-      modal: {name:"test"},
+      modal: {
+	      	name: "",
+	        category: "",
+	        quantity:"",
+	        unit:"",
+	        owner_id:"",
+	        owner_name:"",
+	        item_id: "",
+	        exp:"",
+	      },
+      is_owner: false,
       display: false
     }
   }
 
-  displayModal = (item) => {
+  onSave = () => {
+  	axios({
+        method: 'POST',
+        url: "http://192.168.1.4:3000/update",
+        data: {
+          item_id: this.state.modal.item_id,
+          item: this.state.modal
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((res) => {
+        if (res.data != null) {
+          this.closeModal();
+        }
+        else {
+          console.log("Could not find items")
+        }
 
-    this.setState({modal:item, display: true})
-    console.log(this.state.display, this.state.modal.name)
+      })
+      .catch((err) => {
+        console.log("Error processing query")
+      })
+  }
+
+  onChangeText = (field, value) => {
+    let newModal = this.state.modal
+    newModal[field] = value
+    this.setState({modal: newModal})
+  }
+
+  onDelete = () => {
+  	axios({
+        method: 'POST',
+        url: "http://192.168.1.4:3000/delete/item",
+        data: {
+          item: this.state.modal.item_id
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((res) => {
+        if (res.data != null) {
+
+          this.removeFromResults();
+        }
+        else {
+          console.log("Could not find items")
+        }
+
+      })
+      .catch((err) => {
+        console.log("Error processing query")
+      })
+  }
+
+  displayModal = (item, is_owner) => {
+    this.setState(
+      {
+        modal: item,
+        is_owner: is_owner,
+      }, () => {
+      this.setState({display: true})
+    })
   }
   closeModal = () => {
     this.setState({display: false})
+  }
+
+  removeFromResults = () => {
+  	let id = this.state.modal.item_id;
+  	let index = this.state.results.findIndex(x => x.item_id == id);
+  	let newResults = this.state.results;
+  	newResults.splice(index, 1);
+  	this.setState({results: newResults}, () => {
+  		this.setState({display: false})
+  	})
   }
 
   componentWillMount () {
@@ -48,7 +130,6 @@ export default class Results extends Component {
       })
       .then((res) => {
         if (res.data != null) {
-          console.log(res.data)
           this.setState({results: res.data})
         }
         else {
@@ -65,14 +146,32 @@ export default class Results extends Component {
 
 
   render() {
+  	let submit = this.closeModal;
+  	if (this.state.is_owner) {
+  		submit = this.onSave;
+  	}
     const section = this.props.navigation.getParam('section', 'fridge')
     return (
       <View style={styles.container}>
         <FlatList
           data={this.state.results}
           renderItem = {({item}) => <Result item={item} onPress={this.displayModal.bind(this)}/>}
+          keyExtractor={(item,index) => item.item_id}
         />
-        <ResultModal display={this.state.display} modal={this.state.modal} onClose={this.closeModal.bind(this)}/>
+        <ResultModal 
+        onChangeText={this.onChangeText.bind(this)} 
+        display={this.state.display} 
+        name={this.state.modal.name}
+        category={this.state.modal.category}
+        quantity={this.state.modal.quantity}
+        exp={this.state.modal.exp}
+        owner_id={this.state.modal.owner_id}
+        unit={this.state.modal.unit} 
+        onDelete={this.onDelete.bind(this)}
+        is_owner={this.state.is_owner}
+        onSubmit={submit.bind(this)}
+        onClose={this.closeModal.bind(this)}/>
+
       </View>
     );
   }
