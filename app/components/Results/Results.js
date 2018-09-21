@@ -13,6 +13,7 @@ import Result from './Result'
 import ResultModal from '../Modal/ResultModal'
 
 export default class Results extends Component {
+
   constructor () {
     super();
     this.state = {
@@ -31,6 +32,13 @@ export default class Results extends Component {
       display: false
     }
   }
+  static navigationOptions = ({ navigation }) => ({
+    title: `${navigation.state.params.title}`,
+     headerTitleStyle : {textAlign: 'center',alignSelf:'center', fontSize: 20},
+        headerStyle:{
+            backgroundColor:'white',
+        },
+    });
 
   onSave = () => {
   	axios({
@@ -114,16 +122,39 @@ export default class Results extends Component {
   }
 
   componentWillMount () {
+    let data = {}
+    let url = ""
     const category = this.props.navigation.getParam('category')
+    const type = this.props.navigation.getParam('type')
+    console.log(type)
+    if (type == "owner") {
+      data = {
+        user: this.props.navigation.getParam('id')
+      }
+      url = "http://192.168.1.4:3000/browse/user"
+    }
+    else if (type == "category") {
+      data = {
+        category: this.props.navigation.getParam('category')
+      }
+      url = "http://192.168.1.4:3000/browse/category"
+    } else {
+      data = {
+        fridge: this.props.navigation.getParam('fridge')
+      }
+      url = "http://192.168.1.4:3000/browse/all"
+    }
     AsyncStorage.getItem("user_id")
     .then((id) => {
+      console.log(url)
+      if (type== 'category') {
+        data['user'] = id
+      }
+      console.log(data)
       axios({
         method: 'POST',
-        url: "http://192.168.1.4:3000/browse/category",
-        data: {
-          category: category,
-          user: id
-        },
+        url: url,
+        data: data,
         headers: {
           'Content-Type': 'application/json'
         }

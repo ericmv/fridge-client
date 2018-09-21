@@ -7,29 +7,52 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {AppRegistry, StyleSheet, Text, View, TouchableOpacity, AsyncStorage} from 'react-native';
 
 export default class BrowseHome extends Component {
+  static navigationOptions = {
+    title: "Browse"
+  }
   onPressCategory = () => {
     this.props.navigation.navigate('BrowseCategory', {section: 'fridge'})
+  }
+  onPressUsers = () => {
+    AsyncStorage.getItem("fridge_id")
+    .then((id) => {
+      this.props.navigation.navigate('BrowseUser', {section: 'fridge', id: id})
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
+    
+  }
+  onPressAll = () => {
+    AsyncStorage.getItem("fridge_id")
+    .then((id) => {
+      this.props.navigation.navigate('Results', {title: "All Items", type: "all", fridge: id})
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
+    
   }
   render() {
     const section = this.props.navigation.getParam('section', 'fridge');
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.owner}>
+        <TouchableOpacity style={styles.section} onPress={this.onPressUsers }>
           <View>
-            <Text>Browse {section} By Owner</Text>
+            <Text style={styles.sectionText}>Browse {section} By Owner</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.category} onPress={this.onPressCategory}>
+        <TouchableOpacity style={styles.section} onPress={this.onPressCategory}>
           <View>
-            <Text>Browse {section} By Category</Text>
+            <Text style={styles.sectionText}>Browse {section} By Category</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.all} >
+        <TouchableOpacity style={styles.section} onPress={this.onPressAll}>
           <View>
-            <Text>Browse All {section}</Text>
+            <Text style={styles.sectionText}>Browse All</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -44,24 +67,19 @@ const styles = StyleSheet.create(
       flex: 1,
       flexDirection: 'column',
     },
-    owner: {
+    section: {
       flex: 1,
-      backgroundColor: 'blue',
+      backgroundColor: '#00b894',
+      marginVertical: 5,
+      marginHorizontal: 10,
+      borderRadius: 10,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
-    category: {
-      flex: 1,
-      backgroundColor: 'red',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    all: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
+    sectionText: {
+      color: 'white',
+      fontSize: 22
     }
-
   }
 )
 

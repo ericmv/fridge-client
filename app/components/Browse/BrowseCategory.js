@@ -8,11 +8,13 @@
 
 import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {capitalize} from '../../helpers/helpers'
 
 export default class BrowseCategory extends Component {
 
   handlePress = (category) => {
-    this.props.navigation.navigate("Results", {category: category})
+    const title = capitalize(category)
+    this.props.navigation.navigate("Results", {type: "category", category: category, title: title})
   }
 
   render() {

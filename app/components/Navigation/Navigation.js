@@ -3,6 +3,7 @@ import {AppRegistry, StyleSheet, Text, View, Image, TouchableOpacity} from 'reac
 import HomeScreen from '../HomeScreen/HomeScreen';
 import BrowseHome from '../Browse/BrowseHome';
 import BrowseCategory from '../Browse/BrowseCategory';
+import BrowseUser from '../Browse/BrowseUser';
 import Results from '../Results/Results';
 import Login from '../Validate/Login';
 import AddItem from '../Add/AddItem';
@@ -19,10 +20,11 @@ const RootStack = createStackNavigator(
     BrowseCategory: {screen: BrowseCategory},
     Login: {screen: Login},
     Results: {screen: Results},
-    Add: {screen: AddItem}
+    Add: {screen: AddItem},
+    BrowseUser: {screen: BrowseUser}
   },
   {
-    initialRouteName: 'BrowseCategory',
+    initialRouteName: 'Home',
   }
 );
 
@@ -37,7 +39,6 @@ export default class TabNavigator extends Component {
 		this.setState({display: false})
 	}
 	onOpen=()=>{
-		console.log("LDKSF")
 		this.setState({display: true})
 	}
 	TabNavigator = createBottomTabNavigator (
