@@ -9,16 +9,15 @@
 import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import {isLoggedIn} from '../../helpers/helpers'
+import {register, isLoggedIn} from '../../helpers/helpers'
 
 
 export default class HomeScreen extends Component {
 
   componentWillMount() {
-    this.validateSession();
+    register()
   }
 
-  validateSession = isLoggedIn.bind(this);
 
   onPressFridge() {
     this.props.navigation.navigate('Browse', {section:'Fridge'});

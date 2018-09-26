@@ -5,7 +5,8 @@ import axios from 'axios'
 
 export default class Login extends Component {
   static navigationOptions = {
-    header: null
+    header: null,
+    tabBarVisible: false
   }
   constructor() {
     super();
@@ -36,7 +37,7 @@ export default class Login extends Component {
     console.log(password)
     axios({
       method: 'POST',
-      url: "http://192.168.1.4:3000/users/login",
+      url: "http://192.168.1.3:3000/users/login",
       data: {
         user: username,
         password: password
@@ -48,7 +49,7 @@ export default class Login extends Component {
     .then((res) => {
       if (res.data != null) {
         this.storeSession(res.data);
-        this.props.navigation.navigate("Home");
+        this.props.navigation.navigate("App");
       }
       else {
         console.log("Invalid login credentials")
@@ -142,4 +143,4 @@ const styles = StyleSheet.create(
   }
 )
 
-AppRegistry.registerComponent('Fridge', () => Fridge);
+AppRegistry.registerComponent('Login', () => Login);

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {AppRegistry, StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import HomeScreen from '../HomeScreen/HomeScreen';
 import BrowseHome from '../Browse/BrowseHome';
 import BrowseCategory from '../Browse/BrowseCategory';
@@ -9,18 +9,16 @@ import Login from '../Validate/Login';
 import AddItem from '../Add/AddItem';
 import Profile from '../Profile/Profile';
 import ResultModal from '../Modal/ResultModal';
+import AuthLoadingScreen from '../Validate/AuthLoadingScreen'
 
-import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
+import {createBottomTabNavigator, createStackNavigator, createSwitchNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const RootStack = createStackNavigator(
+const MainStack = createStackNavigator(
   {
-    Home:{screen: HomeScreen},
-    Browse:{screen: BrowseHome},
+    Home:{screen: BrowseHome},
     BrowseCategory: {screen: BrowseCategory},
-    Login: {screen: Login},
     Results: {screen: Results},
-    Add: {screen: AddItem},
     BrowseUser: {screen: BrowseUser}
   },
   {
@@ -28,23 +26,20 @@ const RootStack = createStackNavigator(
   }
 );
 
-export default class TabNavigator extends Component {
-	constructor() {
-		super();
-		this.state = {
-			display: false
-		}
-	}
-	onClose=()=> {
-		this.setState({display: false})
-	}
-	onOpen=()=>{
-		this.setState({display: true})
-	}
-	TabNavigator = createBottomTabNavigator (
+
+const AuthStack = createStackNavigator(
+  {
+    Login: Login
+  },
+  {
+    initialRouteName: 'Login',
+  }
+);
+
+const TabNavigator = createBottomTabNavigator (
     {
       Main: {
-          screen: RootStack,
+          screen: MainStack,
           navigationOptions: () => ({
             tabBarIcon: ({tintColor}) => (
                 <Icon
@@ -54,10 +49,10 @@ export default class TabNavigator extends Component {
                 />
             ),
             tabBarOptions: {
-				showLabel: false
-			}
-       	 })
-    	},
+        showLabel: false
+      }
+         })
+      },
        Add: {
           screen: AddItem,
           navigationOptions: () => ({
@@ -69,10 +64,10 @@ export default class TabNavigator extends Component {
                 />
             ),
             tabBarOptions: {
-				showLabel: false
-			}
+        showLabel: false
+      }
         })
-    	},
+      },
         
       test: {
         screen: props => <ResultModal display={this.state.display} modal={{name:"TEST"}} onClose={this.onClose}/>,
@@ -85,8 +80,8 @@ export default class TabNavigator extends Component {
                 /></TouchableOpacity>
             ),
             tabBarOptions: {
-			    showLabel: false
-			},
+          showLabel: false
+      },
         })
       },
       Profile: {
@@ -100,8 +95,8 @@ export default class TabNavigator extends Component {
                 />
             ),
             tabBarOptions: {
-			    showLabel: false
-			},
+          showLabel: false
+      },
         })
       }
       
@@ -109,9 +104,56 @@ export default class TabNavigator extends Component {
 
 
   )
+
+
+
+// RootStack.navigationOptions = ({ navigation }) => {
+//   let tabBarVisible = true;
+//   if (navigation.state.index == 0) {
+//     tabBarVisible = false;
+//   }
+
+//   return {
+//     tabBarVisible,
+//   };
+// };
+
+export default RootStack = createSwitchNavigator({
+  App: TabNavigator,
+  Auth: AuthStack,
+  AuthLoading: AuthLoadingScreen,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  }
+)
+
+class LoginStack extends Component {
+	constructor() {
+		super();
+		this.state = {
+			display: false
+		}
+	}
+	onClose=()=> {
+		this.setState({display: false})
+	}
+	onOpen=()=>{
+		this.setState({display: true})
+	}
+  LoginStack = createStackNavigator(
+  {
+    Login: {screen: Login},
+    Main: {screen: TabNavigator}
+  },
+  {
+    initialRouteName: 'Login',
+  }
+);
+
 	render() {
 		return (
-		  <this.TabNavigator />
+		  <this.LoginStack />
 		);
 	}
 }

@@ -16,7 +16,7 @@ export default class BrowseUser extends Component {
     const id = this.props.navigation.getParam('id');
     axios({
         method: 'POST',
-        url: "http://192.168.1.4:3000/browse/owners",
+        url: "http://192.168.1.3:3000/browse/owners",
         data: {
           id: id
         },

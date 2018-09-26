@@ -43,7 +43,7 @@ export default class Results extends Component {
   onSave = () => {
   	axios({
         method: 'POST',
-        url: "http://192.168.1.4:3000/update",
+        url: "http://192.168.1.3:3000/update",
         data: {
           item_id: this.state.modal.item_id,
           item: this.state.modal
@@ -75,7 +75,7 @@ export default class Results extends Component {
   onDelete = () => {
   	axios({
         method: 'POST',
-        url: "http://192.168.1.4:3000/delete/item",
+        url: "http://192.168.1.3:3000/delete/item",
         data: {
           item: this.state.modal.item_id
         },
@@ -131,18 +131,18 @@ export default class Results extends Component {
       data = {
         user: this.props.navigation.getParam('id')
       }
-      url = "http://192.168.1.4:3000/browse/user"
+      url = "http://192.168.1.3:3000/browse/user"
     }
     else if (type == "category") {
       data = {
         category: this.props.navigation.getParam('category')
       }
-      url = "http://192.168.1.4:3000/browse/category"
+      url = "http://192.168.1.3:3000/browse/category"
     } else {
       data = {
         fridge: this.props.navigation.getParam('fridge')
       }
-      url = "http://192.168.1.4:3000/browse/all"
+      url = "http://192.168.1.3:3000/browse/all"
     }
     AsyncStorage.getItem("user_id")
     .then((id) => {

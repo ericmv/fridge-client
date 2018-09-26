@@ -11,7 +11,8 @@ import {AppRegistry, StyleSheet, Text, View, TouchableOpacity, AsyncStorage} fro
 
 export default class BrowseHome extends Component {
   static navigationOptions = {
-    title: "Browse"
+    title: "Browse",
+    
   }
   onPressCategory = () => {
     this.props.navigation.navigate('BrowseCategory', {section: 'fridge'})

@@ -7,13 +7,23 @@
  */
 
 import React, {Component} from 'react';
+import Expo from 'expo'
 import {AppRegistry, StyleSheet, Text, View, Image} from 'react-native';
-import TabNavigator from './app/components/Navigation/Navigation'
+import RootStack from './app/components/Navigation/Navigation'
+import {register} from './app/helpers/helpers'
+
 
 export default class fridge extends Component {
+  componentWillMount() {
+    this.listener = Expo.Notifications.addListener(this.listen)
+  }
+  
+  listen = ({origin, data}) => {
+    console.log(origin, data)
+  }
   render() {
     return (
-      <TabNavigator />
+      <RootStack />
     );
   }
 }
