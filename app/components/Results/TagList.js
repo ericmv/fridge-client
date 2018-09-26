@@ -15,7 +15,7 @@ export default class TagList extends Component {
         misc:"#dfe6e9",
         seafood:"#00cec9"
       },
-      owner_name: "#3c6382",
+      quantity: "#3c6382",
       exp: "#fad390"
     }
     return (

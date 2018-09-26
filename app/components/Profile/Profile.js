@@ -2,9 +2,10 @@
 import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import InitialLabel from '../Labels/InitialLabel';
-
+import {logout} from '../../helpers/helpers'
 export default class Profile extends Component {
-
+  
+  
   render() {
 
     return (
@@ -23,9 +24,9 @@ export default class Profile extends Component {
         <View style={styles.button}>
           <Text style={styles.buttonText}>Settings</Text>
         </View>
-        <View style={styles.button}>
+        <TouchableOpacity onPress={logout.bind(this)} style={styles.button}>
           <Text style={styles.buttonText}>Logout</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }

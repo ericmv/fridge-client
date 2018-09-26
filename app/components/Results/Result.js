@@ -5,6 +5,8 @@ import TagList from './TagList'
 import Tag from './Tag'
 import InitialLabel from '../Labels/InitialLabel'
 
+var moment = require('moment')
+
 export default class Result extends Component {
 
   onPress = () => {
@@ -38,7 +40,7 @@ export default class Result extends Component {
 
     axios({
       method: 'POST',
-       url: "http://192.168.1.4:3000/insert/item",
+       url: "http://192.168.1.3:3000/insert/item",
       data: body,
       headers: {
         'Content-Type': 'application/json'
@@ -60,11 +62,30 @@ export default class Result extends Component {
   render() {
     let tagListData = [];
     for (let key in this.props.item) {
-      if (key === "category" || key === "owner_name") {
-        if (key !== "") {
-          tagListData.push({type:key, name:this.props.item[key]});
+      if (key === "category" || key === "quantity") {
+        if (this.props.item[key] !== "") {
+          if (key === "quantity" && this.props.item.unit) {
+            tagListData.push({type:key, name:this.props.item[key] + " " + this.props.item.unit});
+          }
+          else {
+            tagListData.push({type:key, name:this.props.item[key]});
+          }
+          
         }
       }
+    }
+    const today = moment();
+    const expiration = moment(this.props.item.exp);
+
+    const isExpired = expiration.diff(today, "days");
+    let expTagColor = "#f6e58d"
+    let expText = ""
+    if (isExpired < 0) {
+      expTagColor = "red"
+      expText = "Expired"
+    }
+    else {
+      expText = today.from(expiration, true)
     }
     return (
       <View style={styles.container}>
@@ -76,7 +97,7 @@ export default class Result extends Component {
           <View style={styles.name}><TagList data={tagListData}/></View>
         </View>
         <View style={styles.options}>
-          <View style={styles.name}><Tag text="7 days" color="#f6e58d" marginRight={0}/></View>
+          <View style={styles.name}><Tag text={expText} color={expTagColor} marginRight={0}/></View>
           <TouchableOpacity style={styles.name} onPress={this.onPress}><Text style={styles.more}>...</Text></TouchableOpacity>
         </View>
       </View>

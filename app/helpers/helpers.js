@@ -53,7 +53,7 @@ export function request(url, data) {
     })
     .then((res) => {
       if (res.data != null) {
-        console.log("token added");
+        console.log("request success");
       }
       else {
         console.log("error retrieving data from", url)
@@ -87,8 +87,18 @@ export async function register () {
   .catch((err) => {
     console.log("could not retrieve user id to register token for push notifications")
   })
-  
-
   return
+}
 
+export function logout() {
+  AsyncStorage.getItem("session_id")
+  .then((id) => {
+    const data = {session: id}
+    console.log(id)
+    request("http://192.168.1.3:3000/users/logout", data)
+    this.props.navigation.navigate("Auth")
+  })
+  .catch((err) => {
+    this.props.navigation.navigate("Auth")
+  }) 
 }

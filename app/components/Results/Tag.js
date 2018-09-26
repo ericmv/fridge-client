@@ -13,7 +13,7 @@ export default class Tag extends Component {
       borderRadius: 10,
       height:20,
       backgroundColor: this.props.color,
-      paddingHorizontal: 5,
+      paddingHorizontal: 7,
       display: 'flex',
       justifyContent: 'center',
       marginRight: marginRight,
