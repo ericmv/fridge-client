@@ -11,7 +11,9 @@ import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-nativ
 import {capitalize} from '../../helpers/helpers'
 
 export default class BrowseCategory extends Component {
-
+  static navigationOptions = {
+    title: "Categories"
+  }
   handlePress = (category) => {
     const title = capitalize(category)
     this.props.navigation.navigate("Results", {type: "category", category: category, title: title})

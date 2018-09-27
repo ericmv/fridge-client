@@ -6,12 +6,15 @@ import axios from 'axios'
 export default class Login extends Component {
   static navigationOptions = {
     header: null,
-    tabBarVisible: false
+    tabBarVisible: false,
+    headerLeft: (
+      <Text>dfgfd</Text>
+    )
   }
   constructor() {
     super();
     this.state = {
-      username: "",
+      email: "",
       password: ""
     }
   }
@@ -31,15 +34,15 @@ export default class Login extends Component {
 
   }
   validateUser = () => {
-    const username = this.state.username;
+    const email = this.state.email;
     const password = this.state.password;
-    console.log(username);
+    console.log(email);
     console.log(password)
     axios({
       method: 'POST',
       url: "http://192.168.1.10:3000/users/login",
       data: {
-        user: username,
+        email: email,
         password: password
       },
       headers: {
@@ -60,8 +63,39 @@ export default class Login extends Component {
       console.log(err.message)
       console.log("Could not validate session at this time")
     })
-
   }
+
+  registerUser = () => {
+    const email = this.state.email;
+    const password = this.state.password;
+
+    axios({
+      method: 'POST',
+      url: "http://192.168.1.10:3000/users/register",
+      data: {
+        email: email,
+        password: password
+      },
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((res) => {
+      if (res.data != null) {
+        this.storeSession(res.data);
+        this.props.navigation.navigate("App");
+      }
+      else {
+        console.log("Invalid login credentials")
+      }
+
+    })
+    .catch((err) => {
+      console.log(err.message)
+      console.log("Could not validate session at this time")
+    })
+  }
+
 
   render() {
     return (
@@ -75,15 +109,15 @@ export default class Login extends Component {
         <View style={styles.inputContainer}>
           <TextInput
           style={styles.input}
-          placeholder="username"
+          placeholder="Email"
           placeholderTextColor="rgba(255,255,255,0.7)"
           returnKeyType="next"
-          onChangeText = {(input) => this.setState({username: input})}
+          onChangeText = {(input) => this.setState({email: input})}
           onSubmitEditing={()=> this.passwordInput.focus()}
           />
           <TextInput
           style={styles.input}
-          placeholder="password"
+          placeholder="Password"
           placeholderTextColor="rgba(255,255,255,0.7)"
           secureTextEntry
           returnKeyType="go"
@@ -91,8 +125,11 @@ export default class Login extends Component {
           ref={(input) => this.passwordInput = input}
           />
 
-          <TouchableOpacity style={styles.buttonContainer} onPress={this.validateUser}>
+          <TouchableOpacity style={styles.buttonContainer} onPress={this.registerUser}>
             <Text style={styles.buttonText}>LOGIN</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.registerButtonContainer} onPress={this.validateUser}>
+            <Text style={styles.buttonText}>REGISTER</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -132,7 +169,13 @@ const styles = StyleSheet.create(
     },
     buttonContainer: {
       backgroundColor: "#16a085",
-      paddingVertical: 15
+      paddingVertical: 15,
+      marginTop: 10
+    },
+    registerButtonContainer: {
+      backgroundColor: "#16a085",
+      paddingVertical: 15,
+      marginTop: 5
     },
     buttonText: {
       textAlign: 'center',

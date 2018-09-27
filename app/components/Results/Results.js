@@ -131,7 +131,7 @@ export default class Results extends Component {
       data = {
         user: this.props.navigation.getParam('id')
       }
-      url = "http://192.168.1.3:3000/browse/user"
+      url = "http://192.168.1.10:3000/browse/user"
     }
     else if (type == "category") {
       data = {
@@ -189,15 +189,15 @@ export default class Results extends Component {
           renderItem = {({item}) => <Result item={item} onPress={this.displayModal.bind(this)}/>}
           keyExtractor={(item,index) => item.item_id}
         />
-        <ResultModal 
-        onChangeText={this.onChangeText.bind(this)} 
-        display={this.state.display} 
+        <ResultModal
+        onChangeText={this.onChangeText.bind(this)}
+        display={this.state.display}
         name={this.state.modal.name}
         category={this.state.modal.category}
         quantity={this.state.modal.quantity}
         exp={this.state.modal.exp}
         owner_id={this.state.modal.owner_id}
-        unit={this.state.modal.unit} 
+        unit={this.state.modal.unit}
         onDelete={this.onDelete.bind(this)}
         is_owner={this.state.is_owner}
         onSubmit={submit.bind(this)}

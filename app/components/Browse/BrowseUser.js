@@ -5,6 +5,9 @@ import {capitalize} from '../../helpers/helpers'
 import axios from 'axios'
 
 export default class BrowseUser extends Component {
+  static navigationOptions = {
+    title: "Owners"
+  }
   constructor() {
     super();
     this.state = {
@@ -57,9 +60,9 @@ export default class BrowseUser extends Component {
               <Text style={styles.sectionText}>{item.name}</Text>
             </TouchableOpacity>
           )
-          
+
         }
-          
+
         }
         />
 

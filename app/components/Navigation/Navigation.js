@@ -21,10 +21,9 @@ const MainStack = createStackNavigator(
     BrowseCategory: {screen: BrowseCategory},
     Results: {screen: Results},
     BrowseUser: {screen: BrowseUser},
-    EditProfile: {screen: EditProfile}
   },
   {
-    initialRouteName: 'EditProfile',
+    initialRouteName: 'Home',
   }
 );
 
@@ -40,10 +39,12 @@ const AuthStack = createStackNavigator(
 
 const ProfileStack = createStackNavigator(
   {
-    Profile: Profile,
+    Home: Profile,
+    Edit: EditProfile,
+    Items: Results
   },
   {
-    initialRouteName: 'Profile'
+    initialRouteName: 'Home'
   }
 );
 

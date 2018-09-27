@@ -10,18 +10,19 @@ import InitialLabel from '../Labels/InitialLabel';
 
 import {loadUserInfo} from '../../helpers/helpers'
 
+import { StackActions, NavigationActions } from 'react-navigation';
 
 
 export default class EditProfile extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({navigation}) => ({
     headerTitle: "Edit Profile",
     headerRight: (
       <Button
-        onPress={() => alert('This is a button!')}
+        onPress={() => navigation.goBack()}
         title="Done"
       />
     ),
-  };
+  });
 
   constructor() {
     super();
@@ -32,10 +33,11 @@ export default class EditProfile extends React.Component {
       email: "",
       phone: "",
       gender: "",
-      data_loaded: true
+      data_loaded: false
     }
     this.getInfo()
   }
+
 
   getInfo = loadUserInfo.bind(this)
   setUserInfo(info) {
@@ -101,7 +103,7 @@ export default class EditProfile extends React.Component {
           <View style={styles.password}>
             <Button
               title="Change Password"
-              onPress={() => alert('This is a button!')}
+              onPress={() => {this.props.navigation.goBack()}}
             />
           </View>
           <Text style={styles.headerLabel}>Personal Information</Text>

@@ -1,11 +1,26 @@
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {AppRegistry, StyleSheet, Text, View, TouchableOpacity, AsyncStorage} from 'react-native';
 import InitialLabel from '../Labels/InitialLabel';
 import {logout} from '../../helpers/helpers'
+
+
 export default class Profile extends Component {
 
+  goToMyItems = () => {
+    AsyncStorage.getItem("user_id")
+    .then((id) => {
+      this.props.navigation.navigate('Items', {type: "owner", id: id, title: "My Items"})
+    })
+    .catch((err) => {
+      console.log("error loading items")
+    })
 
+  }
+
+  static navigationOptions = {
+    title: "Profile"
+  }
   render() {
 
     return (
@@ -15,9 +30,9 @@ export default class Profile extends Component {
             <InitialLabel text="E" size={90}/>
           </View>
         </View>
-        <View style={styles.button}>
+        <TouchableOpacity onPress={this.goToMyItems} style={styles.button}>
           <Text style={styles.buttonText}>My Items</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.button}>
           <Text style={styles.buttonText}>Fridge Settings</Text>
         </View>
