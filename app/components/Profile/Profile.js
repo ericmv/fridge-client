@@ -4,8 +4,8 @@ import {AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-nativ
 import InitialLabel from '../Labels/InitialLabel';
 import {logout} from '../../helpers/helpers'
 export default class Profile extends Component {
-  
-  
+
+
   render() {
 
     return (
@@ -21,9 +21,9 @@ export default class Profile extends Component {
         <View style={styles.button}>
           <Text style={styles.buttonText}>Fridge Settings</Text>
         </View>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Settings</Text>
-        </View>
+        <TouchableOpacity onPress={() => {this.props.navigation.navigate("Edit")}} style={styles.button}>
+          <Text style={styles.buttonText}>Edit Profile</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={logout.bind(this)} style={styles.button}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create(
       fontSize: 18,
       paddingLeft: 15,
     }
-    
+
   }
 )
 

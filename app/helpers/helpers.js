@@ -13,7 +13,7 @@ export async function isLoggedIn() {
     }
     axios({
       method: 'POST',
-      url: "http://192.168.1.3:3000/users/validateSession",
+      url: "http://192.168.1.10:3000/users/validateSession",
       data: {
         session: id
       },
@@ -100,5 +100,41 @@ export function logout() {
   })
   .catch((err) => {
     this.props.navigation.navigate("Auth")
-  }) 
+  })
+}
+
+export function loadUserInfo() {
+  AsyncStorage.getItem("user_id")
+  .then((id) => {
+    const data = {id: id}
+    const url =
+    axios({
+        method: 'POST',
+        url: "http://192.168.1.10:3000/users/info",
+        data: data,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((res) => {
+        if (res.data != null) {
+          this.setState({
+            first_name: res.data.first_name,
+            last_name:res.data.last_name,
+            username:res.data.username,
+            email: res.data.email,
+            phone: res.data.phone,
+            gender: res.data.gender,
+            data_loaded: true
+          })
+        }
+        else {
+          console.log("error retrieving data from", url)
+        }
+      })
+      .catch((err) => {
+        console.log(err.message)
+        console.log("Could not POST")
+      })
+  })
 }

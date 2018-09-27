@@ -9,7 +9,8 @@ import Login from '../Validate/Login';
 import AddItem from '../Add/AddItem';
 import Profile from '../Profile/Profile';
 import ResultModal from '../Modal/ResultModal';
-import AuthLoadingScreen from '../Validate/AuthLoadingScreen'
+import AuthLoadingScreen from '../Validate/AuthLoadingScreen';
+import EditProfile from '../Profile/EditProfile';
 
 import {createBottomTabNavigator, createStackNavigator, createSwitchNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,10 +20,11 @@ const MainStack = createStackNavigator(
     Home:{screen: BrowseHome},
     BrowseCategory: {screen: BrowseCategory},
     Results: {screen: Results},
-    BrowseUser: {screen: BrowseUser}
+    BrowseUser: {screen: BrowseUser},
+    EditProfile: {screen: EditProfile}
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'EditProfile',
   }
 );
 
@@ -33,6 +35,15 @@ const AuthStack = createStackNavigator(
   },
   {
     initialRouteName: 'Login',
+  }
+);
+
+const ProfileStack = createStackNavigator(
+  {
+    Profile: Profile,
+  },
+  {
+    initialRouteName: 'Profile'
   }
 );
 
@@ -68,7 +79,7 @@ const TabNavigator = createBottomTabNavigator (
       }
         })
       },
-        
+
       test: {
         screen: props => <ResultModal display={this.state.display} modal={{name:"TEST"}} onClose={this.onClose}/>,
         navigationOptions: () => ({
@@ -85,7 +96,7 @@ const TabNavigator = createBottomTabNavigator (
         })
       },
       Profile: {
-        screen: Profile,
+        screen: ProfileStack,
         navigationOptions: () => ({
             tabBarIcon: ({tintColor}) => (
                 <Icon
@@ -99,7 +110,7 @@ const TabNavigator = createBottomTabNavigator (
       },
         })
       }
-      
+
     }
 
 
@@ -157,5 +168,3 @@ class LoginStack extends Component {
 		);
 	}
 }
-
-

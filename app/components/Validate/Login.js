@@ -37,7 +37,7 @@ export default class Login extends Component {
     console.log(password)
     axios({
       method: 'POST',
-      url: "http://192.168.1.3:3000/users/login",
+      url: "http://192.168.1.10:3000/users/login",
       data: {
         user: username,
         password: password
