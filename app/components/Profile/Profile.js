@@ -34,6 +34,9 @@ export default class Profile extends Component {
           <Text style={styles.buttonText}>My Items</Text>
         </TouchableOpacity>
         <View style={styles.button}>
+          <Text style={styles.buttonText}>Invite User</Text>
+        </View>
+        <View style={styles.button}>
           <Text style={styles.buttonText}>Fridge Settings</Text>
         </View>
         <TouchableOpacity onPress={() => {this.props.navigation.navigate("Edit")}} style={styles.button}>
