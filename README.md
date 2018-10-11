@@ -14,7 +14,7 @@ Clone the repo ```git clone https://github.com/ericmv/fridge-client.git```
 
 Install Dependencies ```npm install```
 
-Start ```npm start```
+Start ```expo start```
 
 ## Built With
 
